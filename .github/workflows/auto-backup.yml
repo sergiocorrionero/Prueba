@@ -1,0 +1,22 @@
+name: Backup automático
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Ejecutar cada hora
+  workflow_dispatch:      # También se puede ejecutar manualmente desde GitHub
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar el repositorio
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: true
+
+    - name: Dar permisos al script
+      run: chmod +x scripts/backup_script.sh
+
+    - name: Ejecutar script de backup
+      run: ./scripts/backup_script.sh

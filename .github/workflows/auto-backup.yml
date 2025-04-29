@@ -8,15 +8,30 @@ on:
 jobs:
   backup:
     runs-on: ubuntu-latest
-
     steps:
     - name: Clonar el repositorio
       uses: actions/checkout@v3
       with:
-        persist-credentials: true
+        persist-credentials: t
+name: Backup automático
 
-    - name: Dar permisos al script
-      run: chmod +x scripts/backup_script.sh
+on:
+  schedule:
+    - cron: '0 * * * *'  # Cada hora en punto
+  workflow_dispatch:      # Permite ejecución manual desde GitHub
 
-    - name: Ejecutar script de backup
-      run: ./scripts/backup_script.sh
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true  # Necesario para que git push funcione
+
+      - name: Dar permisos al script
+        run: chmod +x scripts/backup_script.sh
+
+      - name: Ejecutar script de backup
+        run: ./scripts/backup_script.sh

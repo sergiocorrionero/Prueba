@@ -20,7 +20,3 @@ jobs:
 
       - name: Ejecutar script de backup
         run: ./scripts/backup_script.sh
-
-
-      - name: Ejecutar script de backup
-        run: ./scripts/backup_script.sh
